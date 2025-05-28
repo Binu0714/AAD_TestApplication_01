@@ -2,9 +2,87 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Manager</title>
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
+
+<div class="decorative-element"></div>
+<div class="decorative-element"></div>
+
+<div class="container">
+    <div class="header">
+        <h1>✨ Event Manager</h1>
+        <p>Create, organize, and manage your events with elegance</p>
+    </div>
+
+    <div class="form-container">
+        <div class="form-title">
+            <h2>🎯 Create New Event</h2>
+            <p>Fill in the details below to add a new event</p>
+        </div>
+
+        <form id="eventForm">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="eventId">Event ID</label>
+                    <input type="text" id="eventId" name="eventId" placeholder="e.g., EVT001" required>
+                </div>
+                <div class="form-group">
+                    <label for="eventName">Event Name</label>
+                    <input type="text" id="eventName" name="eventName" placeholder="e.g., Annual Conference 2025" required>
+                </div>
+                <div class="form-group">
+                    <label for="eventDate">Event Date</label>
+                    <input type="date" id="eventDate" name="eventDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="eventPlace">Event Place</label>
+                    <input type="text" id="eventPlace" name="eventPlace" placeholder="e.g., Grand Convention Center" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="eventDescription">Event Description</label>
+                <textarea id="eventDescription" name="eventDescription" placeholder="Provide a detailed description of your event, including agenda, speakers, and key highlights..." required></textarea>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn btn-create" id="create-btn">Create Event</button>
+                <button type="button" class="btn btn-update" id="update-btn">Update Event</button>
+                <button type="button" class="btn btn-delete" id="delete-btn">Delete Event</button>
+                <button type="button" class="btn btn-get-all" id="get-btn">Get All Events</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="table-container">
+        <div class="table-header">
+            <h2>📊 Events Dashboard</h2>
+            <p>Overview of all your managed events</p>
+        </div>
+
+        <div class="table-wrapper">
+            <table id="eventTable">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Place</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="lib/jquery-3.7.1.min.js"></script>
+<script src="js.js"></script>
 
 </body>
 </html>
