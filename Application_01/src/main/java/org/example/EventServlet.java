@@ -52,7 +52,7 @@ public class EventServlet extends HttpServlet {
     @Override
     protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setHeader("Access-Control-Allow-Origin", "*");
-        resp.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+        resp.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
         resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
         resp.setStatus(HttpServletResponse.SC_OK);
     }
@@ -90,4 +90,34 @@ public class EventServlet extends HttpServlet {
         }
     }
 
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setHeader("Access-Control-Allow-Origin", "*");
+        resp.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
+        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, String> event = mapper.readValue(req.getInputStream(), Map.class);
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/event_db", "root", "binu12345");
+
+            PreparedStatement stmt = connection.prepareStatement(
+                    "UPDATE eventTable SET name = ?, description = ?, date = ?, place = ? WHERE id = ?"
+            );
+            stmt.setString(1, event.get("ename"));
+            stmt.setString(2, event.get("edescription"));
+            stmt.setString(3, event.get("edate"));
+            stmt.setString(4, event.get("eplace"));
+            stmt.setString(5, event.get("eid"));
+
+            int rows = stmt.executeUpdate();
+            resp.setContentType("application/json");
+            mapper.writeValue(resp.getWriter(), rows);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

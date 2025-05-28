@@ -542,3 +542,7 @@ tr:hover td {
         min-width: 600px;
     }
 }
+
+.selected-row {
+    background-color: #DAD2FF;
+}
