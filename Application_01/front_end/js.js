@@ -26,3 +26,35 @@ $('#get-btn').click(function (){
         }
     });
 });
+
+$('#create-btn').click(function (action) {
+    action.preventDefault();
+
+    const event = {
+        eid: $('#eventId').val(),
+        ename: $('#eventName').val(),
+        edescription: $('#eventDescription').val(),
+        edate: $('#eventDate').val(),
+        eplace: $('#eventPlace').val()
+    };
+
+    $.ajax({
+        url: 'http://localhost:8080/Application_01_Web_exploded/event',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(event),
+
+        success: function (response) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Event Created',
+                text: 'Event Created successfully!',
+                confirmButtonText: 'OK'
+            });
+            $('#get-btn').click();
+        },
+        error: function () {
+            alert("Error creating event");
+        }
+    });
+});
