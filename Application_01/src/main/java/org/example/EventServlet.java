@@ -120,4 +120,30 @@ public class EventServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setHeader("Access-Control-Allow-Origin", "*");
+        resp.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
+        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, String> body = mapper.readValue(req.getInputStream(), Map.class);
+        String eid = body.get("eid");
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/event_db", "root", "binu12345");
+
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM eventTable WHERE id = ?");
+            stmt.setString(1, eid);
+
+            int rows = stmt.executeUpdate();
+            resp.setContentType("application/json");
+            mapper.writeValue(resp.getWriter(), rows);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

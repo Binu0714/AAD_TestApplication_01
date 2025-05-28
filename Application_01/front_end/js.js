@@ -96,6 +96,7 @@ $('#update-btn').click(function (action) {
                 text: 'Event updated successfully!',
                 confirmButtonText: 'OK'
             });
+            clearFeilds();
             $('#get-btn').click();
         },
         error: function () {
@@ -118,4 +119,39 @@ $('#eventTable').on('click', 'tr', function () {
     $('#eventDescription').val(tds.eq(2).text());
     $('#eventDate').val(tds.eq(3).text());
     $('#eventPlace').val(tds.eq(4).text());
+});
+
+$('#delete-btn').click(function (action) {
+    const eid = $('#eventId').val();
+    if (!eid) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Event ID Fieled is null',
+            text: 'Unable to Delete Event.Please check your input values and try again.',
+        });
+        return;
+    }
+    $.ajax({
+        url: 'http://localhost:8080/Application_01_Web_exploded/event',
+        method: 'DELETE',
+        contentType: 'application/json',
+        data: JSON.stringify({ eid }),
+        success: function (response) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Event Deleted',
+                text: 'Event Deleted successfully!',
+                confirmButtonText: 'OK'
+            });
+            clearFeilds();
+            $('#get-btn').click();
+        },
+        error: function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Unable to delete',
+                text: 'Unable to Delete Event.Please check your input values and try again.',
+            });
+        }
+    });
 });
