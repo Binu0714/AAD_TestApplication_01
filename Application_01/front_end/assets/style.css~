@@ -51,7 +51,7 @@ body::before {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    /*animation: gradientFlow 4s ease-in-out infinite;*/
+    animation: gradientFlow 4s ease-in-out infinite;
     margin-bottom: 15px;
     position: relative;
 }
